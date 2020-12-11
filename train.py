@@ -11,28 +11,7 @@ import matplotlib.pyplot as plt
 import os
 import time
 import copy
-#%% 数据预处理及增强
-# data_transforms = {
-#     'train': transforms.Compose([
-#         transforms.RandomResizedCrop(224),
-#         transforms.RandomHorizontalFlip(0.5),
-#         transforms.ToTensor(),
-#         # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-#     ]),
-#     'val': transforms.Compose([
-#         transforms.Resize(256),
-#         transforms.CenterCrop(224),
-#         transforms.ToTensor(),
-#         # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-#     ])
-# }
 #%% 制作数据集
-# image_datasets = {
-#     x: datasets.ImageFolder(
-#         root=os.path.join('./dataset', x),
-#         transform=data_transforms[x]
-#     ) for x in ['train', 'val']
-# }
 full_dataset = datasets.ImageFolder(
     root='./dataset',
     transform=transforms.Compose([
@@ -218,6 +197,6 @@ model_ft = train_model(
 )
 
 #%% 测试结果可视化
-# visualize_model(model_ft)
+visualize_model(model_ft)
 #%% 保存模型
 torch.save(model_ft.state_dict(), 'model.pt')
