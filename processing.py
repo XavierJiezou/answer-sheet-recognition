@@ -1,5 +1,4 @@
-#%%
-from cv2 import cv2
+import cv2
 import numpy as np
 from skimage import measure
 
@@ -25,14 +24,15 @@ def baweraopen(image, size):
     return output
 
 
-def answerGet(path, part=4):
-    r = cv2.imread(path, 0)
+def answerGet(r, part=4):
+    # r = cv2.imread(path, 0)
     se = cv2.getStructuringElement(cv2.MORPH_RECT, (15, 15))
     res = cv2.morphologyEx(r, cv2.MORPH_BLACKHAT, se, iterations=1)
     m, n = res.shape
     ret, rbw = cv2.threshold(res, 20, 255, cv2.THRESH_BINARY)
     # cv2.imshow("bw", rbw)
-    lines = cv2.HoughLinesP(rbw, 1, np.pi / 180, 40, minLineLength=200, maxLineGap=50)
+    lines = cv2.HoughLinesP(rbw, 1, np.pi / 180, 40,
+                            minLineLength=200, maxLineGap=50)
     an = []
     for line in lines:
         x1, y1, x2, y2 = line[0]
@@ -239,10 +239,10 @@ def answerGet(path, part=4):
 
     # cv2.imshow("ss", res)
     # cv2.waitKey(0)
-    return answer
-    # 现在answer里存的就是分割出来的选项
-#%%
-answer = answerGet("1.png")
-for i,j in enumerate(answer):
-    cv2.imwrite('pics/'+str(i+1)+'.png', j)
-# %%
+    return answer # 现在answer里存的就是分割出来的选项
+
+    
+# answer = answerGet("2.png")
+# for i, j in enumerate(answer):
+#     print(j.shape)
+#     cv2.imwrite('pics/'+str(i+1)+'.png', j)
