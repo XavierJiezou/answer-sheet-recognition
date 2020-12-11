@@ -1,4 +1,4 @@
-#%%
+# 导入模块
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
@@ -15,7 +15,7 @@ test_transforms = transforms.Compose([
 
 # 制作数据集
 test_dataset = datasets.ImageFolder(
-    root='./pics',
+    root='./test',
     transform=test_transforms
 )
 
@@ -27,7 +27,8 @@ test_loader = DataLoader(
     shuffle=False,
     num_workers=0
 )
-#%%
+
+
 # 加载模型
 device = torch.device('cpu')
 class_names = test_dataset.classes
@@ -35,7 +36,8 @@ model = models.resnet18(pretrained=False)
 num_ftrs = model.fc.in_features
 model.fc = nn.Linear(num_ftrs, len(class_names))
 model.load_state_dict(torch.load('model.pt', map_location=device))
-#%%
+
+
 # 可视化函数
 def visualize_model(model):
     model.eval()
@@ -49,13 +51,13 @@ def visualize_model(model):
         for i in range(inputs.size(0)):
             plt.subplot(4, 5, i+1)
             plt.axis('off')
-            plt.title(f'pred: {class_names[preds[i]]}|true: {class_names[labels[i]]}')
+            plt.title(
+                f'pred: {class_names[preds[i]]}|true: {class_names[labels[i]]}')
             im = inputs[i].permute(1, 2, 0)
             plt.imshow(im)
         plt.savefig('test.jpg')
         plt.show()
 
-# 可视化结果
-visualize_model(model)
 
-# %%
+# 可视化
+visualize_model(model)
