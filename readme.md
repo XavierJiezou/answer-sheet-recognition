@@ -1,5 +1,5 @@
 # Answer-Sheet-Recogniton
-This repo contains a sample code to show how to identify the 'ABCD' inside the answer sheet using transfer learning based on pytorch and trained on the own marked answer sheet dataset.
+This repo contains a sample code to show how to identify the `ABCD` inside the answer sheet using transfer learning based on pytorch and trained on the own marked answer sheet dataset.
 ## Demo
 > [https://answer-sheet-recognition.herokuapp.com/](https://answer-sheet-recognition.herokuapp.com/)
 
