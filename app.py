@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template
 import torchvision.transforms as transforms
-import torch.nn.functional as F
+# import torch.nn.functional as F
 from torchvision import models
 import torch.nn as nn
 from PIL import Image
@@ -40,8 +40,9 @@ def get_prediction(ans):
         outputs = model.forward(tensor)
         preds = outputs.argmax(1)
         prediction = [class_names[item] for item in preds]
-        confidence = F.softmax(outputs, 1).max(1)[0].detach().numpy().tolist()
-        return prediction, confidence
+        # confidence = F.softmax(outputs, 1).max(1)[0].detach().numpy().tolist()
+        # return prediction, confidence
+        return prediction
 
 
 @app.route('/')
@@ -53,13 +54,17 @@ def index():
 def upload():
     file = request.files.get('file')
     img_bytes = file.read()
-    img = Image.open(io.BytesIO(img_bytes))
-    img = img.convert('L')
-    img = np.array(img)
+    path = './static/img/upload.jpg'
+    with open(path, 'wb') as f:
+        f.write(img_bytes)
+    # img = Image.open(io.BytesIO(img_bytes))
+    # img = img.convert('L')
+    # img = np.array(img)
     part = request.values.get( "part" )
-    ans = answerGet(img, int(part))
-    prediction, confidence = get_prediction(ans)
-    return jsonify({'prediction': prediction, 'confidence': confidence})
+    # ans = answerGet(img, int(part))
+    ans = answerGet(path, int(part))
+    prediction = get_prediction(ans)
+    return jsonify({'prediction': prediction})
 
 
 if __name__ == '__main__':

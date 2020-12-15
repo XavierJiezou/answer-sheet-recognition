@@ -24,8 +24,8 @@ def baweraopen(image, size):
     return output
 
 
-def answerGet(r, part=4):
-    # r = cv2.imread(path, 0)
+def answerGet(path, part):
+    r = cv2.imread(path, 0)
     se = cv2.getStructuringElement(cv2.MORPH_RECT, (15, 15))
     res = cv2.morphologyEx(r, cv2.MORPH_BLACKHAT, se, iterations=1)
     m, n = res.shape
